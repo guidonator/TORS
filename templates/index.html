@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text-Eingabe Anwendung</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Text-Eingabe Anwendung</h1>
+            <div class="progress">
+                <span>Eingabe {{ count + 1 }} von 5</span>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: {{ (count / 5) * 100 }}%"></div>
+                </div>
+            </div>
+        </header>
+
+        {% if last_short_text %}
+        <div class="last-entry">
+            <h3>Letzter kurzer Text:</h3>
+            <p>"{{ last_short_text }}"</p>
+        </div>
+        {% endif %}
+
+        <form method="POST" action="/submit" class="text-form">
+            <div class="form-group">
+                <label for="long_text">Langer Text (max. 1000 Zeichen):</label>
+                <textarea 
+                    id="long_text" 
+                    name="long_text" 
+                    maxlength="1000" 
+                    placeholder="Geben Sie hier Ihren langen Text ein..."
+                    required
+                ></textarea>
+                <div class="char-counter">
+                    <span id="long_counter">0</span> / 1000 Zeichen
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="short_text">Kurzer Text (max. 100 Zeichen):</label>
+                <input 
+                    type="text" 
+                    id="short_text" 
+                    name="short_text" 
+                    maxlength="100" 
+                    placeholder="Kurzer Text..."
+                    required
+                />
+                <div class="char-counter">
+                    <span id="short_counter">0</span> / 100 Zeichen
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Absenden</button>
+                <a href="/reset" class="btn btn-secondary">Zurücksetzen</a>
+            </div>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

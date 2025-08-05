@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alle Texte - Text-Eingabe Anwendung</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Alle eingegebenen Texte</h1>
+            <div class="completion-badge">
+                ✅ 5 von 5 Eingaben abgeschlossen
+            </div>
+        </header>
+
+        <div class="result-content">
+            <h2>Zusammengefasster Text:</h2>
+            <div class="final-text">
+                {{ all_texts }}
+            </div>
+            
+            <div class="text-stats">
+                <p><strong>Gesamtlänge:</strong> {{ all_texts|length }} Zeichen</p>
+                <p><strong>Anzahl Wörter:</strong> {{ all_texts.split()|length }}</p>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <a href="/reset" class="btn btn-primary">Neue Session starten</a>
+            <button onclick="copyToClipboard()" class="btn btn-secondary">Text kopieren</button>
+        </div>
+    </div>
+
+    <script>
+        function copyToClipboard() {
+            const text = document.querySelector('.final-text').textContent;
+            navigator.clipboard.writeText(text).then(function() {
+                alert('Text wurde in die Zwischenablage kopiert!');
+            }, function(err) {
+                console.error('Fehler beim Kopieren: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
